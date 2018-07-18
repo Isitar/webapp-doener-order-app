@@ -1,0 +1,10 @@
+version: '2'
+services:
+  doener-order-app:
+    build: .
+    volumes:
+      - ./src/:/var/www/html/
+    ports:
+      - "18080:80"
+    environment:
+      - HOSTIP=192.168.0.189
