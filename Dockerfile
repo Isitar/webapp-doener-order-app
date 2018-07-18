@@ -1,6 +1,12 @@
 FROM php:7.2-apache
+ARG HOSTIP
+
 RUN a2enmod rewrite
 RUN docker-php-ext-install pdo pdo_mysql
+
+RUN apt-get update &&\
+    apt-get install --no-install-recommends --assume-yes --quiet sass &&\
+    rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update &&\
     apt-get install --no-install-recommends --assume-yes --quiet ca-certificates curl git &&\
@@ -18,4 +24,5 @@ RUN pecl install xdebug-2.6.0 \
 COPY src/ /var/www/html
 COPY apache-conf.conf /etc/apache2/conf-enabled/yii2.conf
 
-RUN php /var/www/html/yii migrate --interactive=0
+RUN sass /var/www/html/assets/scss/custom.scss:/var/www/html/web/css/custom.css
+# RUN php /var/www/html/yii migrate --interactive=0
