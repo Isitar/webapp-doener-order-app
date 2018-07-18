@@ -1,5 +1,8 @@
 FROM php:7.2-apache
 ARG HOSTIP
+ENV MYSQL_HOST='127.0.0.1'
+ENV MYSQL_USER='root'
+ENV MYSQL_PW='';
 
 RUN a2enmod rewrite
 RUN docker-php-ext-install pdo pdo_mysql
@@ -25,4 +28,6 @@ COPY src/ /var/www/html
 COPY apache-conf.conf /etc/apache2/conf-enabled/yii2.conf
 
 RUN sass /var/www/html/assets/scss/custom.scss:/var/www/html/web/css/custom.css
+RUN chgrp www-data /var/www/html -R
+RUN chmod g+w /var/www/html/web -R
 # RUN php /var/www/html/yii migrate --interactive=0
