@@ -30,4 +30,8 @@ COPY apache-conf.conf /etc/apache2/conf-enabled/yii2.conf
 RUN sass /var/www/html/assets/scss/custom.scss:/var/www/html/web/css/custom.css
 RUN chgrp www-data /var/www/html -R
 RUN chmod g+w /var/www/html/web -R
-# RUN php /var/www/html/yii migrate --interactive=0
+
+EXPOSE 80
+EXPOSE 443
+
+#ENTRYPOINT php /var/www/html/yii migrate --interactive=0

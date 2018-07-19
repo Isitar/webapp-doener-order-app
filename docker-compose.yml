@@ -1,12 +1,15 @@
-version: '2'
+version: '3'
 services:
   doener-order-app:
     build:
      context: .
      args:
        - HOSTIP=192.168.0.189
-
     volumes:
       - ./src/:/var/www/html/
     ports:
       - "28080:80"
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_PW=Dvx0TNJMj48yJ9ozFnix
+      - MYSQL_HOST=192.168.0.18:32409
