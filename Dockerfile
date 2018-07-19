@@ -28,7 +28,7 @@ COPY src/ /var/www/html
 COPY apache-conf.conf /etc/apache2/conf-enabled/yii2.conf
 
 RUN sass /var/www/html/assets/scss/custom.scss:/var/www/html/web/css/custom.css
-RUN chgrp www-data /var/www/html -R
+RUN chgrp www-data /var/www/html/web -R
 RUN chmod g+w /var/www/html/web -R
 
 RUN chgrp www-data /var/www/html/runtime -R

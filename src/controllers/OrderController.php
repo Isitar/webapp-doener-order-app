@@ -116,7 +116,7 @@ class OrderController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'food' => Food::find()->all(),
+            'foods' => Food::find()->all(),
         ]);
     }
 
