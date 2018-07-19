@@ -35,6 +35,7 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['user_name','food_id'],'required'],
             [['food_id', 'date'], 'integer'],
             [['comment'], 'string'],
             [['user_name'], 'string', 'max' => 255],

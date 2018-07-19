@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Order */
 
-$this->title = $model->id;
+$this->title = Yii::t('app','Order') . ' ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Orders'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -29,11 +29,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'food_id',
+            [
+                'attribute'=>'food.name',
+                'label'=>Yii::t('app','Food name'),
+            ],
             'user_name',
-            'date',
+            [
+                'attribute'=>'date',
+                'format'=>'date',
+            ],
             'comment:ntext',
         ],
     ]) ?>
 
+    <h3><?=Yii::t('app','Ingredients') ?></h3>
+    <?= $this->render('partials/_ingredients', [
+            'model'=>$model
+        ]);
+    ?>
 </div>

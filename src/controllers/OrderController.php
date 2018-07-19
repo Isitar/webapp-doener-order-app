@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Food;
+use app\models\OrderIngredient;
 use Yii;
 use app\models\Order;
 use app\models\search\OrderSearch;
@@ -65,16 +66,36 @@ class OrderController extends Controller
      */
     public function actionCreate()
     {
+
         $model = new Order();
+        $model->date = time();
+
         $loaded = $model->load(Yii::$app->request->post());
-        if ($loaded && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($loaded) {
+            $trans = Yii::$app->db->beginTransaction();
+            try {
+                if ($model->save()) {
+                    foreach ($model->ingredientIds as $ingredientId) {
+                        $orderIngredient = new OrderIngredient();
+                        $orderIngredient->order_id = $model->id;
+                        $orderIngredient->ingredient_id = $ingredientId;
+                        $orderIngredient->save();
+                    }
+                    $trans->commit();
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    $trans->rollBack();
+                }
+            } catch (\Exception $e) {
+                $trans->rollBack();
+            }
+
         }
 
 
         return $this->render('create', [
             'model' => $model,
-            'foods'=>Food::find()->all(),
+            'foods' => Food::find()->all(),
         ]);
     }
 
@@ -95,7 +116,7 @@ class OrderController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'food'=>Food::find()->all(),
+            'food' => Food::find()->all(),
         ]);
     }
 

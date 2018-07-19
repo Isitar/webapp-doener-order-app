@@ -23,14 +23,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
-            'food_id',
-            'user_name',
-            'date',
-            'comment:ntext',
 
+            'user_name',
+            [
+                'attribute' => 'date',
+                'format' => 'date',
+            ],
+
+            'food.name',
+            [
+                'label' => Yii::t('app', 'Ingredients'),
+                'value' => function ($model) {
+                    /** @var \app\models\Order $model */
+                    return implode(', ', array_map(function ($ingredient) {
+                        /** @var \app\models\Ingredient $ingredient */
+                        return $ingredient->name;
+                    }, $model->ingredients));
+                }
+            ],
+            'comment:ntext',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

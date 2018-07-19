@@ -14,11 +14,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'food_id')->dropDownList(\yii\helpers\ArrayHelper::map($foods, 'id', 'name'),['id'=>'ddl-food']) ?>
-
     <?= $form->field($model, 'user_name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'date')->textInput() ?>
+    <?= $form->field($model, 'food_id')->dropDownList(\yii\helpers\ArrayHelper::map($foods, 'id', 'name'), ['id' => 'ddl-food']) ?>
 
     <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
 
@@ -29,11 +26,15 @@ use yii\widgets\ActiveForm;
     <div class="form-group">
         <h2><?= Yii::t('app', 'ingredients') ?></h2>
         <?php foreach ($foods as $food): ?>
-            <div class="ingredient-list" id="<?= $food->id?>-ingredients">
-                <?php foreach ($food->foodIngredients as $foodIngredient): ?>
-                    <?= $foodIngredient->ingredient->name ?>
-                    <?= Html::checkbox('Order[ingredientIds][]',null,['value'=>$foodIngredient->ingredient_id]) ?>
-                <?php endforeach; ?>
+            <div class="ingredient-list" id="<?= $food->id ?>-ingredients">
+                <ul>
+                    <?php foreach ($food->foodIngredients as $foodIngredient): ?>
+                        <li>
+                            <?= $foodIngredient->ingredient->name ?>
+                            <?= Html::checkbox('Order[ingredientIds][]', null, ['value' => $foodIngredient->ingredient_id]) ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
         <?php endforeach; ?>`
 
