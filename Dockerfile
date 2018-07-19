@@ -15,7 +15,7 @@ RUN apt-get update &&\
     apt-get install --no-install-recommends --assume-yes --quiet ca-certificates curl git &&\
     rm -rf /var/lib/apt/lists/*
 
-	
+
 RUN pecl install xdebug-2.6.0 \
     && docker-php-ext-enable xdebug \
     && echo "[XDebug]" >> /usr/local/etc/php/php.ini \
@@ -30,6 +30,10 @@ COPY apache-conf.conf /etc/apache2/conf-enabled/yii2.conf
 RUN sass /var/www/html/assets/scss/custom.scss:/var/www/html/web/css/custom.css
 RUN chgrp www-data /var/www/html -R
 RUN chmod g+w /var/www/html/web -R
+
+RUN chgrp www-data /var/www/html/runtime -R
+RUN chmod g+rwx /var/www/html/runtime -R
+
 
 EXPOSE 80
 EXPOSE 443
