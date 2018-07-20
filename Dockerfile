@@ -46,4 +46,4 @@ COPY startup_migrate.sh /
 RUN chmod u+x /usr/local/bin/docker-extended-entrypoint
 RUN chmod u+x /startup_migrate.sh
 #
-# ENTRYPOINT ["docker-extended-entrypoint"]
+ENTRYPOINT ["docker-extended-entrypoint"]
