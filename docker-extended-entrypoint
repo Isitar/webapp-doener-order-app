@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Custom scripts here
+echo "This is an extended entrypoint!"
+sh /startup_migrate.sh
+# Run the original entrypoint located at
+# /docker-entrypoint.sh
+
+exec ./docker-entrypoint "$@"
