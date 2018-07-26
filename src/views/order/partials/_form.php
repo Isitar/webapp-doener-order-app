@@ -36,7 +36,7 @@ use yii\widgets\ActiveForm;
                     <?php endforeach; ?>
                 </ul>
             </div>
-        <?php endforeach; ?>`
+        <?php endforeach; ?>
 
     </div>
 
